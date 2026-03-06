@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 import { BookOpen, FileText, CheckCircle, Clock } from 'lucide-react';
 import Link from 'next/link';
 
@@ -21,7 +21,7 @@ const iconMap: Record<string, React.ReactNode> = {
 };
 
 export default function DashboardOverviewClient({ stats }: { stats: Stat[] }) {
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     show: {
       opacity: 1,
@@ -29,9 +29,13 @@ export default function DashboardOverviewClient({ stats }: { stats: Stat[] }) {
     }
   };
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } }
+    show: { 
+      opacity: 1, 
+      y: 0, 
+      transition: { type: "spring", stiffness: 300, damping: 24 } 
+    }
   };
 
   return (
