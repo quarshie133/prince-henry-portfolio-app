@@ -2,9 +2,15 @@ import { prisma } from '@/lib/prisma';
 import AboutSettingsForm from '../about/AboutSettingsForm';
 
 export default async function AboutSettingsPage() {
-  const settings = await prisma.siteSettings.findUnique({
-    where: { id: 'singleton' }
-  });
+  let settings = null;
+
+  try {
+    settings = await prisma.siteSettings.findUnique({
+      where: { id: 'singleton' }
+    });
+  } catch (error) {
+    console.error("Skipping DB fetch during prerender:", error);
+  }
 
   const defaultSettings = settings || {
     aboutText: "Hello. I'm a writer bridging the gap between digital thoughts and tangible feelings."

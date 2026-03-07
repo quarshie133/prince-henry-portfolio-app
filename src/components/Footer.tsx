@@ -8,7 +8,13 @@ import {
 } from 'lucide-react'; // Fallback icons
 
 export async function Footer() {
-  const socials = await prisma.siteSettings.findUnique({ where: { id: 'singleton' } });
+  let socials = null;
+
+  try {
+    socials = await prisma.siteSettings.findUnique({ where: { id: 'singleton' } });
+  } catch (error) {
+    console.error("Skipping DB fetch during prerender:", error);
+  }
 
   return (
     <footer className="border-t border-gray-200 dark:border-gray-800 mt-20 transition-colors duration-300">

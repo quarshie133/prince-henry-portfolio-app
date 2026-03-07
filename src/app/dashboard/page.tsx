@@ -3,12 +3,21 @@ import { BookOpen, FileText, CheckCircle, Clock } from 'lucide-react';
 import DashboardOverviewClient from './DashboardOverviewClient';
 
 export default async function DashboardOverview() {
-  const [totalPoetry, totalStories, publishedPosts, drafts] = await Promise.all([
-    prisma.post.count({ where: { type: 'poetry' } }),
-    prisma.post.count({ where: { type: 'story' } }),
-    prisma.post.count({ where: { published: true } }),
-    prisma.post.count({ where: { published: false } }),
-  ]);
+  let totalPoetry = 0, totalStories = 0, publishedPosts = 0, drafts = 0;
+
+  try {
+    // Wrap in try-catch to prevent build failures during static prerendering
+    // on platforms like Netlify where the DATABASE_URL might not be available
+    // at build time.
+    [totalPoetry, totalStories, publishedPosts, drafts] = await Promise.all([
+      prisma.post.count({ where: { type: 'poetry' } }),
+      prisma.post.count({ where: { type: 'story' } }),
+      prisma.post.count({ where: { published: true } }),
+      prisma.post.count({ where: { published: false } }),
+    ]);
+  } catch (error) {
+    console.error("Failed to fetch dashboard stats (likely pre-rendering without DB access):", error);
+  }
 
   const stats = [
     { title: "Total Poetry", value: totalPoetry, icon: "BookOpen", color: "from-blue-500/20 to-purple-500/20", textColor: "text-blue-500" },

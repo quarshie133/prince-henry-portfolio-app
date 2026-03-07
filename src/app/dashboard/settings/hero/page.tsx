@@ -2,9 +2,15 @@ import { prisma } from '@/lib/prisma';
 import HeroSettingsForm from '../hero/HeroSettingsForm';
 
 export default async function HeroSettingsPage() {
-  const settings = await prisma.siteSettings.findUnique({
-    where: { id: 'singleton' }
-  });
+  let settings = null;
+
+  try {
+    settings = await prisma.siteSettings.findUnique({
+      where: { id: 'singleton' }
+    });
+  } catch (error) {
+    console.error("Skipping DB fetch during prerender:", error);
+  }
 
   const defaultSettings = settings || {
     heroTitle: "Words that resonate, stories that endure.",

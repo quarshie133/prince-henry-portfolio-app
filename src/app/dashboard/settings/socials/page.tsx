@@ -2,9 +2,15 @@ import { prisma } from '@/lib/prisma';
 import SocialSettingsForm from '../socials/SocialSettingsForm';
 
 export default async function SocialSettingsPage() {
-  const settings = await prisma.siteSettings.findUnique({
-    where: { id: 'singleton' }
-  });
+  let settings = null;
+
+  try {
+    settings = await prisma.siteSettings.findUnique({
+      where: { id: 'singleton' }
+    });
+  } catch (error) {
+    console.error("Skipping DB fetch during prerender:", error);
+  }
 
   const defaultSettings = settings || {
     instagram: "",

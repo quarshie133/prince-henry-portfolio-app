@@ -3,10 +3,16 @@ import Link from 'next/link';
 import { PageTransition } from '@/components/PageTransition';
 
 export default async function ShortStoriesPage() {
-  const posts = await prisma.post.findMany({
-    where: { type: 'story', published: true },
-    orderBy: { createdAt: 'desc' }
-  });
+  let posts: any[] = [];
+
+  try {
+    posts = await prisma.post.findMany({
+      where: { type: 'story', published: true },
+      orderBy: { createdAt: 'desc' }
+    });
+  } catch (error) {
+    console.error("Skipping DB fetch during prerender:", error);
+  }
 
   return (
     <PageTransition>
