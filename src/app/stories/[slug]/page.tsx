@@ -15,16 +15,16 @@ export default async function BlogPostPage(props: { params: Params }) {
 
   return (
     <div className="container mx-auto px-4 py-20 max-w-2xl">
-      <Link href="/blog" className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-black dark:hover:text-white transition-colors mb-12">
-        <ArrowLeft size={16} /> Back to essays
+      <Link href="/stories" className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-black dark:hover:text-white transition-colors mb-12">
+        <ArrowLeft size={16} /> Back to stories
       </Link>
-      
+
       <article>
         <header className="mb-12">
           <h1 className="text-4xl md:text-5xl font-serif font-medium mb-4 tracking-tight">{post.title}</h1>
           <time className="text-gray-500">{new Date(post.createdAt).toLocaleDateString()}</time>
         </header>
-        
+
         <div className="prose prose-lg dark:prose-invert font-sans text-gray-800 dark:text-gray-200">
           {/* Simple splitting by double newline to create paragraphs since we don't have a markdown parser installed yet */}
           {post.content.split('\n\n').map((paragraph: string, idx: number) => (
