@@ -59,7 +59,7 @@ export default function LoginPage() {
               W
             </motion.div>
             <h1 className="text-2xl font-serif font-medium tracking-tight mb-2">Admin Login</h1>
-            <p className="text-gray-500 text-sm">Enter your credentials to access the dashboard</p>
+            <p className="text-gray-500 text-sm">Enter your credentials to access the Dashboard</p>
           </div>
 
           <form onSubmit={handleSubmit} className="p-8 space-y-6">
