@@ -9,6 +9,9 @@ export function Navbar() {
           Prince Henry
         </Link>
         <nav className="hidden md:flex gap-6 text-sm font-medium">
+          <Link href="/" className="text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors">
+            Home
+          </Link>
           <Link href="/about" className="text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors">
             About
           </Link>
