@@ -16,7 +16,7 @@ const lora = Lora({
 });
 
 export const metadata: Metadata = {
-  title: "Writer Portfolio",
+  title: "Prince Henry",
   description: "A minimal, elegant portfolio for a writer.",
 };
 
