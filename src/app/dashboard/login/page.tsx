@@ -56,7 +56,7 @@ export default function LoginPage() {
               transition={{ delay: 0.2, type: 'spring' }}
               className="w-16 h-16 bg-black dark:bg-white text-white dark:text-black rounded-2xl mx-auto flex items-center justify-center text-2xl font-serif font-bold mb-4"
             >
-              W
+              PH
             </motion.div>
             <h1 className="text-2xl font-serif font-medium tracking-tight mb-2">Admin Login</h1>
             <p className="text-gray-500 text-sm">Enter your credentials to access the Dashboard</p>
