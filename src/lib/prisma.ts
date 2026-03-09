@@ -1,5 +1,4 @@
 import { PrismaClient } from '@prisma/client';
-import { createClient } from '@libsql/client';
 import { PrismaLibSql } from '@prisma/adapter-libsql';
 
 const globalForPrisma = globalThis as unknown as {
@@ -11,11 +10,10 @@ const createPrismaClient = () => {
 
     // If it's a remote Turso URL, use the libSQL adapter
     if (url.startsWith('libsql://') || url.startsWith('https://')) {
-        const libsql = createClient({
+        const adapter = new PrismaLibSql({
             url,
             authToken: process.env.TURSO_AUTH_TOKEN,
         });
-        const adapter = new PrismaLibSql(libsql);
         // @ts-ignore - Prisma types might complain about adapter depending on version, but it works
         return new PrismaClient({ adapter });
     }
