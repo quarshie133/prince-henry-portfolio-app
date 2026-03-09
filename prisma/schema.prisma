@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -15,27 +15,28 @@ model User {
 }
 
 model Post {
-  id          String   @id @default(cuid())
-  title       String
-  slug        String   @unique
-  content     String
-  type        String   // "poetry" or "story"
-  published   Boolean  @default(false)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id        String   @id @default(cuid())
+  title     String
+  slug      String   @unique
+  content   String
+  type      String // "poetry" or "story"
+  published     Boolean  @default(false)
+  featuredImage String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 }
 
 model SiteSettings {
-  id          String   @id @default("singleton")
-  heroTitle   String   @default("Words that resonate, stories that endure.")
-  heroSub     String   @default("Welcome to my digital garden. I write about poetry, technology, and the spaces in between.")
-  aboutText   String   @default("Hello. I'm a writer bridging the gap between digital thoughts and tangible feelings.")
-  aboutImage  String?
-  instagram   String?
-  twitter     String?
-  facebook    String?
-  tiktok      String?
-  snapchat    String?
-  whatsapp    String?  @default("+233 55 659 7805")
-  updatedAt   DateTime @updatedAt
+  id         String   @id @default("singleton")
+  heroTitle  String   @default("Words that resonate, stories that endure.")
+  heroSub    String   @default("Welcome to my digital garden. I write about poetry, technology, and the spaces in between.")
+  aboutText  String   @default("Hello. I'm a writer bridging the gap between digital thoughts and tangible feelings.")
+  aboutImage String?
+  instagram  String?
+  twitter    String?
+  facebook   String?
+  tiktok     String?
+  snapchat   String?
+  whatsapp   String?  @default("+233 55 659 7805")
+  updatedAt  DateTime @updatedAt
 }

@@ -1,106 +1,73 @@
-import { prisma } from '@/lib/prisma';
+'use client';
+
 import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
-import { PageTransition } from '@/components/PageTransition';
+import { motion } from 'framer-motion';
 
-export default async function Home() {
-  const settings = await prisma.siteSettings.findUnique({ where: { id: 'singleton' } });
-  
-  const [latestPoetry, latestEssays] = await Promise.all([
-    prisma.post.findMany({
-      where: { type: 'poetry', published: true },
-      orderBy: { createdAt: 'desc' },
-      take: 2
-    }),
-    prisma.post.findMany({
-      where: { type: 'story', published: true },
-      orderBy: { createdAt: 'desc' },
-      take: 3
-    })
-  ]);
-
+export default function Home() {
   return (
-    <PageTransition>
-      <div className="container mx-auto px-4 py-20 max-w-4xl">
-        {/* Animated Hero Section */}
-        <section className="mb-24 md:mb-32">
-          <h1 className="text-5xl md:text-7xl font-serif font-medium tracking-tight mb-6 leading-tight">
-            {settings?.heroTitle || 'Words that resonate, stories that endure.'}
+    <div className="relative min-h-[100dvh] w-full flex items-center justify-center overflow-hidden bg-black text-white">
+      {/* Background Image with Overlay */}
+      <div
+        className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: 'url("https://images.unsplash.com/photo-1455390582262-044cdead27d8?q=80&w=2873&auto=format&fit=crop")',
+        }}
+      >
+        <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px]"></div>
+      </div>
+
+      {/* Content */}
+      <div className="relative z-10 container mx-auto px-4 flex flex-col items-center text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, ease: "easeOut" }}
+        >
+          <h1 className="text-4xl md:text-6xl lg:text-8xl font-serif font-medium tracking-tight mb-6 text-white drop-shadow-md">
+            Nibenang Prince Henry.
           </h1>
-          <p className="text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-2xl mb-10 leading-relaxed font-serif">
-            {settings?.heroSub || 'Welcome to my digital garden. I write about poetry, technology, and the spaces in between.'}
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
+          className="max-w-xl mx-auto"
+        >
+          <p className="text-lg md:text-2xl text-gray-200 font-serif font-light mb-12 tracking-wide">
+            Words that resonate. Stories that endure.
           </p>
-          <div className="flex gap-4 items-center">
-            <Link href="/poetry" className="px-6 py-3 bg-black dark:bg-white text-white dark:text-black font-medium rounded-full hover:scale-105 transition-transform duration-300">
-              Read Poetry
-            </Link>
-            <Link href="/about" className="px-6 py-3 font-medium text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors">
-              About Me
-            </Link>
-          </div>
-        </section>
+        </motion.div>
 
-        {/* Selected Works - Poetry */}
-        <section className="mb-24">
-          <div className="flex justify-between items-end mb-8 border-b border-gray-200 dark:border-gray-800 pb-4">
-            <h2 className="text-2xl font-serif font-medium">Selected Poetry</h2>
-            <Link href="/poetry" className="text-sm font-medium text-gray-500 hover:text-black dark:hover:text-white transition-colors flex items-center gap-1 group">
-              View all <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-            </Link>
-          </div>
-          <div className="grid gap-6 md:grid-cols-2">
-            {latestPoetry.map((post: any) => (
-              <ArticleCard 
-                key={post.id}
-                title={post.title}
-                excerpt={post.content}
-                date={new Date(post.createdAt).toLocaleDateString()}
-                href={`/poetry/${post.slug}`}
-              />
-            ))}
-            {latestPoetry.length === 0 && <p className="text-gray-500 italic">No poetry published yet.</p>}
-          </div>
-        </section>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 0.8 }}
+          className="flex gap-6 sm:gap-8 items-center"
+        >
+          <Link
+            href="/poetry"
+            className="group relative px-6 py-2 text-sm md:text-base font-medium uppercase tracking-widest overflow-hidden"
+          >
+            <span className="relative z-10 transition-colors duration-300 group-hover:text-black">
+              Poetry
+            </span>
+            <div className="absolute inset-0 h-full w-full bg-white scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left z-0"></div>
+            <div className="absolute bottom-0 left-0 h-[1px] w-full bg-white/50"></div>
+          </Link>
 
-        {/* Latest Essays / Stories */}
-        <section>
-          <div className="flex justify-between items-end mb-8 border-b border-gray-200 dark:border-gray-800 pb-4">
-            <h2 className="text-2xl font-serif font-medium">Short Stories</h2>
-            <Link href="/stories" className="text-sm font-medium text-gray-500 hover:text-black dark:hover:text-white transition-colors flex items-center gap-1 group">
-              View all <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-            </Link>
-          </div>
-          <div className="flex flex-col gap-6">
-            {latestEssays.map((post: any) => (
-               <ArticleCard 
-                key={post.id}
-                title={post.title}
-                excerpt={post.content}
-                date={new Date(post.createdAt).toLocaleDateString()}
-                href={`/stories/${post.slug}`}
-              />
-            ))}
-            {latestEssays.length === 0 && <p className="text-gray-500 italic">No stories published yet.</p>}
-          </div>
-        </section>
+          <Link
+            href="/stories"
+            className="group relative px-6 py-2 text-sm md:text-base font-medium uppercase tracking-widest overflow-hidden"
+          >
+            <span className="relative z-10 transition-colors duration-300 group-hover:text-black">
+              Stories
+            </span>
+            <div className="absolute inset-0 h-full w-full bg-white scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left z-0"></div>
+            <div className="absolute bottom-0 left-0 h-[1px] w-full bg-white/50"></div>
+          </Link>
+        </motion.div>
       </div>
-    </PageTransition>
-  );
-}
-
-function ArticleCard({ title, excerpt, date, href }: { title: string, excerpt: string, date: string, href: string }) {
-  // Simple excerpt generation
-  const cleanExcerpt = excerpt.replace(/<[^>]*>?/gm, '').substring(0, 150) + '...';
-  
-  return (
-    <Link href={href} className="block group">
-      <div className="p-6 rounded-2xl bg-gray-50 dark:bg-[#111] hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors h-full border border-transparent dark:border-gray-800/50">
-        <div className="text-xs text-gray-500 mb-3">{date}</div>
-        <h3 className="text-xl font-serif font-medium mb-3 group-hover:underline underline-offset-4 decoration-gray-300 dark:decoration-gray-600">{title}</h3>
-        <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed line-clamp-3">
-          {cleanExcerpt}
-        </p>
-      </div>
-    </Link>
+    </div>
   );
 }

@@ -16,7 +16,7 @@ export default async function DashboardOverview() {
       prisma.post.count({ where: { published: false } }),
     ]);
   } catch (error) {
-    console.error("Failed to fetch dashboard stats (likely pre-rendering without DB access):", error);
+    console.error("Failed to fetch dashboard stats: Database is currently unreachable.");
   }
 
   const stats = [

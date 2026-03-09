@@ -6,7 +6,7 @@ export function Navbar() {
     <header className="sticky top-0 z-50 w-full border-b border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-black/80 backdrop-blur-md transition-colors duration-300">
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
         <Link href="/" className="font-serif text-xl font-medium tracking-tight hover:opacity-80 transition-opacity">
-          Prince Henry
+          Nibenang Prince Henry.
         </Link>
         <nav className="hidden md:flex gap-6 text-sm font-medium">
           <Link href="/" className="text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors">

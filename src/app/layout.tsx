@@ -16,8 +16,8 @@ const lora = Lora({
 });
 
 export const metadata: Metadata = {
-  title: "Prince Henry",
-  description: "A minimal, elegant portfolio for a writer.",
+  title: "Nibenang Prince Henry | Writer & Poet",
+  description: "The digital portfolio of Nibenang Prince Henry. Exploring poetry, short stories, and thoughts on life.",
 };
 
 export default function RootLayout({

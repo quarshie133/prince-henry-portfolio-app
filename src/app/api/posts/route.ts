@@ -7,28 +7,31 @@ function generateSlug(title: string) {
     return title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') + '-' + Math.random().toString(36).substring(2, 8);
 }
 
-export async function POST(req: Request) {
+export async function POST(request: Request) {
     try {
         const session = await getServerSession(authOptions);
         if (!session) {
             return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
         }
 
-        const data = await req.json();
-        const { title, content, type, published } = data;
+        const body = await request.json();
+        const { title, content, type, published, featuredImage } = body;
 
         if (!title || !content || !type) {
-            return NextResponse.json({ message: 'Missing required fields' }, { status: 400 });
+            return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
         }
+
+        const slug = generateSlug(title);
 
         const post = await prisma.post.create({
             data: {
                 title,
+                slug,
                 content,
                 type,
-                published: !!published,
-                slug: generateSlug(title)
-            }
+                published: published ?? false,
+                featuredImage: featuredImage || null,
+            },
         });
 
         return NextResponse.json(post);
@@ -46,7 +49,7 @@ export async function PUT(req: Request) {
         }
 
         const data = await req.json();
-        const { id, title, content, type, published } = data;
+        const { id, title, content, type, published, featuredImage } = data;
 
         if (!id || !title || !content || !type) {
             return NextResponse.json({ message: 'Missing required fields' }, { status: 400 });
@@ -59,6 +62,7 @@ export async function PUT(req: Request) {
                 content,
                 type,
                 published: !!published,
+                featuredImage: featuredImage || null,
             }
         });
 

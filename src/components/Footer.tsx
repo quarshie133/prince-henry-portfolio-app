@@ -1,8 +1,8 @@
 import { prisma } from '@/lib/prisma';
-import { 
-  Instagram, 
-  Twitter, 
-  Facebook, 
+import {
+  Instagram,
+  Twitter,
+  Facebook,
   MessageCircle,
   Video
 } from 'lucide-react'; // Fallback icons
@@ -13,14 +13,16 @@ export async function Footer() {
   try {
     socials = await prisma.siteSettings.findUnique({ where: { id: 'singleton' } });
   } catch (error) {
-    console.error("Skipping DB fetch during prerender:", error);
+    console.error("Skipping DB fetch for Footer: Database is unreachable.");
   }
 
   return (
     <footer className="border-t border-gray-200 dark:border-gray-800 mt-20 transition-colors duration-300">
       <div className="container mx-auto px-4 py-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500 dark:text-gray-400">
-        <p>© {new Date().getFullYear()} Prince Henry. All rights reserved.</p>
-        
+        <p className="text-sm font-medium">
+          © {new Date().getFullYear()} Nibenang Prince Henry. All rights reserved.
+        </p>
+
         <div className="flex gap-6 mt-4 md:mt-0">
           {socials?.instagram && (
             <a href={socials.instagram} target="_blank" aria-label="Instagram" className="hover:text-black dark:hover:text-white transition-colors">

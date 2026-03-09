@@ -3,12 +3,12 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signOut } from "next-auth/react";
-import { 
-  LayoutDashboard, 
-  BookOpen, 
-  FileText, 
-  LogOut, 
-  Settings, 
+import {
+  LayoutDashboard,
+  BookOpen,
+  FileText,
+  LogOut,
+  Settings,
   User,
   PanelLeftClose,
   Menu
@@ -24,19 +24,18 @@ export default function DashboardSidebar() {
   };
 
   const SidebarLink = ({ href, icon, label }: { href: string; icon: React.ReactNode; label: string }) => {
-    const isActive = href === '/dashboard' 
-      ? pathname === href 
+    const isActive = href === '/dashboard'
+      ? pathname === href
       : pathname.startsWith(href);
-      
+
     return (
-      <Link 
+      <Link
         href={href}
         onClick={() => setIsOpen(false)}
-        className={`flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all text-sm font-medium ${
-          isActive 
-            ? "bg-black text-white dark:bg-white dark:text-black shadow-md placeholder-hover" 
+        className={`flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all text-sm font-medium ${isActive
+            ? "bg-black text-white dark:bg-white dark:text-black shadow-md placeholder-hover"
             : "text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800/50"
-        }`}
+          }`}
       >
         {icon}
         {label}
@@ -47,7 +46,7 @@ export default function DashboardSidebar() {
   return (
     <>
       {/* Mobile Toggle Button */}
-      <button 
+      <button
         onClick={() => setIsOpen(!isOpen)}
         className="md:hidden fixed bottom-4 right-4 z-50 p-4 bg-black dark:bg-white text-white dark:text-black rounded-full shadow-xl"
       >
@@ -56,7 +55,7 @@ export default function DashboardSidebar() {
 
       {/* Backdrop for Mobile */}
       {isOpen && (
-        <div 
+        <div
           className="md:hidden fixed inset-0 bg-black/50 z-30"
           onClick={() => setIsOpen(false)}
         />
@@ -76,8 +75,20 @@ export default function DashboardSidebar() {
             <PanelLeftClose size={20} />
           </button>
         </div>
-        
+
         <div className="flex-1 overflow-y-auto px-4 py-8 flex flex-col gap-8">
+          {/* User Profile Summary */}
+          <div className="p-4 border-t border-gray-200 dark:border-gray-800">
+            <div className="flex items-center gap-3 px-3 py-2">
+              <div className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center text-sm font-medium">
+                PH
+              </div>
+              <div className="flex-1 overflow-hidden">
+                <p className="text-sm font-medium truncate">Nibenang P. Henry</p>
+                <p className="text-xs text-gray-500 truncate">Administrator</p>
+              </div>
+            </div>
+          </div>
           <div className="space-y-1">
             <SidebarLink href="/dashboard" icon={<LayoutDashboard size={18} />} label="Dashboard" />
           </div>
@@ -89,7 +100,7 @@ export default function DashboardSidebar() {
             <SidebarLink href="/dashboard/poetry" icon={<BookOpen size={18} />} label="Poetry Posts" />
             <SidebarLink href="/dashboard/stories" icon={<FileText size={18} />} label="Short Stories" />
           </div>
-          
+
           <div className="space-y-1">
             <div className="px-3 mb-3 text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">
               Site Settings
