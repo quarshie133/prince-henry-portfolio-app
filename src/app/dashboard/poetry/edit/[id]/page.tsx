@@ -19,7 +19,7 @@ export default async function EditPoetryPage({ params }: { params: Promise<{ id:
         <h1 className="text-3xl font-serif font-medium mb-2">Edit Poetry</h1>
         <p className="text-gray-500">Update your poem '{post.title}'.</p>
       </div>
-      <PostForm type="poetry" initialData={post} />
+      <PostForm post={post} />
     </div>
   );
 }

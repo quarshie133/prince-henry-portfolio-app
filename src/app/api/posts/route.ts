@@ -7,6 +7,18 @@ function generateSlug(title: string) {
     return title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') + '-' + Math.random().toString(36).substring(2, 8);
 }
 
+export async function GET() {
+    try {
+        const posts = await prisma.post.findMany({
+            orderBy: { createdAt: 'desc' }
+        });
+        return NextResponse.json(posts);
+    } catch (error) {
+        console.error("GET /api/posts error:", error);
+        return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
+    }
+}
+
 export async function POST(request: Request) {
     try {
         const session = await getServerSession(authOptions);
@@ -41,34 +53,4 @@ export async function POST(request: Request) {
     }
 }
 
-export async function PUT(req: Request) {
-    try {
-        const session = await getServerSession(authOptions);
-        if (!session) {
-            return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
-        }
-
-        const data = await req.json();
-        const { id, title, content, type, published, featuredImage } = data;
-
-        if (!id || !title || !content || !type) {
-            return NextResponse.json({ message: 'Missing required fields' }, { status: 400 });
-        }
-
-        const post = await prisma.post.update({
-            where: { id },
-            data: {
-                title,
-                content,
-                type,
-                published: !!published,
-                featuredImage: featuredImage || null,
-            }
-        });
-
-        return NextResponse.json(post);
-    } catch (error) {
-        console.error("PUT /api/posts error:", error);
-        return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
-    }
-}
+ 

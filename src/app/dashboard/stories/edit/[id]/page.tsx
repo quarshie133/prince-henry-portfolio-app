@@ -19,7 +19,7 @@ export default async function EditStoryPage({ params }: { params: Promise<{ id: 
         <h1 className="text-3xl font-serif font-medium mb-2">Edit Story</h1>
         <p className="text-gray-500">Update your story '{post.title}'.</p>
       </div>
-      <PostForm type="story" initialData={post} />
+      <PostForm post={post} />
     </div>
   );
 }

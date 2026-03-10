@@ -11,7 +11,8 @@ import {
   Settings,
   User,
   PanelLeftClose,
-  Menu
+  Menu,
+  Users
 } from "lucide-react";
 import { useState } from "react";
 
@@ -99,6 +100,7 @@ export default function DashboardSidebar() {
             </div>
             <SidebarLink href="/dashboard/poetry" icon={<BookOpen size={18} />} label="Poetry Posts" />
             <SidebarLink href="/dashboard/stories" icon={<FileText size={18} />} label="Short Stories" />
+            <SidebarLink href="/dashboard/subscribers" icon={<Users size={18} />} label="Subscribers" />
           </div>
 
           <div className="space-y-1">

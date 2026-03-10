@@ -1,6 +1,7 @@
 import { prisma } from '@/lib/prisma';
 import { PageTransition } from '@/components/PageTransition';
 import { Mail, MessageCircle, MapPin } from 'lucide-react';
+import NewsletterForm from '@/components/NewsletterForm';
 
 export default async function ContactPage() {
   let socials = null;
@@ -95,6 +96,11 @@ export default async function ContactPage() {
               </button>
             </form>
           </div>
+        </div>
+
+        {/* Newsletter Subscription Section */}
+        <div className="mt-8 border-t border-gray-200 dark:border-gray-800 border-dashed pt-8">
+          <NewsletterForm />
         </div>
       </div>
     </PageTransition>

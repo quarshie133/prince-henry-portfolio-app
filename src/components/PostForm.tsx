@@ -52,8 +52,8 @@ export function PostForm({ post }: PostFormProps) {
 
       const postData = { ...formData, featuredImage: finalImageUrl };
 
-      const url = post ? `/api/posts/${post.id}` : '/api/posts';
-      const method = post ? 'PUT' : 'POST';
+      const url = post?.id ? `/api/posts/${post.id}` : '/api/posts';
+      const method = post?.id ? 'PUT' : 'POST';
 
       const res = await fetch(url, {
         method,
@@ -192,7 +192,7 @@ export function PostForm({ post }: PostFormProps) {
           className="px-6 py-2.5 bg-black dark:bg-white text-white dark:text-black font-medium rounded-xl hover:scale-105 transition-all flex items-center gap-2 disabled:opacity-50 disabled:scale-100 shadow-lg shadow-black/10 dark:shadow-white/10"
         >
           <Save size={18} />
-          {loading ? 'Saving...' : (post ? 'Update Post' : 'Save Post')}
+          {loading ? 'Saving...' : (post?.id ? 'Update Post' : 'Save Post')}
         </button>
       </div>
     </form>

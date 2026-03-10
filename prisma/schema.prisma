@@ -40,3 +40,9 @@ model SiteSettings {
   whatsapp   String?  @default("+233 55 659 7805")
   updatedAt  DateTime @updatedAt
 }
+
+model Subscriber {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  createdAt DateTime @default(now())
+}
