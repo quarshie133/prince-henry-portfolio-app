@@ -5,19 +5,20 @@ import { motion } from 'framer-motion';
 
 export default function Home() {
   return (
-    <div className="relative min-h-[100dvh] w-full flex items-center justify-center overflow-hidden bg-black text-white">
-      {/* Background Image with Overlay & Zoom Animation */}
+    <div className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-black text-white">
+      {/* Background Image with Zoom Animation */}
       <motion.div
-        className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
+        className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat w-full h-full"
         style={{
           backgroundImage: 'url("https://images.unsplash.com/photo-1455390582262-044cdead27d8?q=80&w=2873&auto=format&fit=crop")',
         }}
         initial={{ scale: 1.1 }}
         animate={{ scale: 1 }}
         transition={{ duration: 10, ease: "easeOut" }}
-      >
-        <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px]"></div>
-      </motion.div>
+      />
+      
+      {/* Static Subtly-blurred Overlay */}
+      <div className="absolute inset-0 z-[1] bg-black/50 backdrop-blur-[2px] pointer-events-none"></div>
 
       {/* Content */}
       <div className="relative z-10 container mx-auto px-4 flex flex-col items-center text-center">
