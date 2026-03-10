@@ -16,6 +16,7 @@ export async function Footer() {
     console.error("Skipping DB fetch for Footer: Database is unreachable.");
   }
 
+  return (
     <footer className="border-t border-gray-200 dark:border-gray-800 mt-20 transition-colors duration-300">
       <div className="container mx-auto px-4 py-12 flex flex-col md:flex-row justify-between items-center md:items-start gap-8 text-sm text-gray-500 dark:text-gray-400">
         
@@ -70,4 +71,5 @@ export async function Footer() {
 
       </div>
     </footer>
+  );
 }
