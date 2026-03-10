@@ -33,8 +33,8 @@ export default function StoriesListClient({
         className="flex justify-between items-end pb-6 border-b border-gray-200 dark:border-gray-800"
       >
         <div>
-          <h1 className="text-3xl font-serif font-medium mb-2">Short Stories</h1>
-          <p className="text-gray-500">Manage your short story posts.</p>
+          <h1 className="text-3xl font-serif font-medium mb-2">Stories & Articles</h1>
+          <p className="text-gray-500">Manage your stories and articles.</p>
         </div>
         <Link href="/dashboard/stories/new" className="px-4 py-2 bg-black dark:bg-white text-white dark:text-black font-medium rounded-xl hover:scale-105 active:scale-95 transition-all flex items-center gap-2 shadow-lg shadow-black/10 dark:shadow-white/10">
           <Plus size={18} /> New Story

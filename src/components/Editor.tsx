@@ -11,7 +11,7 @@ import {
     Quote, Undo, Redo, AlignLeft, AlignCenter,
     AlignRight, AlignJustify, Link as LinkIcon,
     Image as ImageIcon, Youtube as YoutubeIcon,
-    Music
+    Music, Film
 } from 'lucide-react';
 
 interface EditorProps {
@@ -24,12 +24,45 @@ const MenuBar = ({ editor }: { editor: any }) => {
         return null;
     }
 
-    const addImage = useCallback(() => {
-        const url = window.prompt('URL of the image (e.g. https://example.com/image.jpg):');
-        if (url) {
-            editor.chain().focus().setImage({ src: url }).run();
+    const imageInputRef = React.useRef<HTMLInputElement>(null);
+    const audioInputRef = React.useRef<HTMLInputElement>(null);
+    const videoInputRef = React.useRef<HTMLInputElement>(null);
+
+    const [isUploading, setIsUploading] = React.useState(false);
+
+    const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>, type: 'image' | 'audio' | 'video') => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        setIsUploading(true);
+        const formData = new FormData();
+        formData.append('file', file);
+
+        try {
+            const res = await fetch('/api/upload', {
+                method: 'POST',
+                body: formData,
+            });
+            
+            if (!res.ok) throw new Error('Upload failed');
+            const data = await res.json();
+            const url = data.url;
+
+            if (type === 'image') {
+                editor.chain().focus().setImage({ src: url }).run();
+            } else if (type === 'audio') {
+                editor.chain().focus().insertContent(`<p><audio controls src="${url}" class="w-full my-4"></audio></p>`).run();
+            } else if (type === 'video') {
+                editor.chain().focus().insertContent(`<p><video controls src="${url}" class="w-full my-4 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800"></video></p>`).run();
+            }
+        } catch (error) {
+            console.error('Failed to upload media:', error);
+            alert('Failed to upload media. Please try again.');
+        } finally {
+            setIsUploading(false);
+            if (e.target) e.target.value = ''; // Reset input
         }
-    }, [editor]);
+    };
 
     const addYoutubeVideo = useCallback(() => {
         const url = window.prompt('URL of the YouTube video:');
@@ -46,30 +79,13 @@ const MenuBar = ({ editor }: { editor: any }) => {
         const previousUrl = editor.getAttributes('link').href;
         const url = window.prompt('URL', previousUrl);
 
-        // cancelled
-        if (url === null) {
-            return;
-        }
-
-        // empty
+        if (url === null) return;
         if (url === '') {
             editor.chain().focus().extendMarkRange('link').unsetLink().run();
             return;
         }
-
-        // update link
         editor.chain().focus().extendMarkRange('link').setLink({ href: url }).run();
     }, [editor]);
-
-    const addAudio = useCallback(() => {
-        // A custom approach since there isn't an official @tiptap/extension-audio yet.
-        // We simply insert raw HTML assuming the StarterKit / html parser allows it or 
-        // we wrap it in a paragraph. 
-        const url = window.prompt('URL of the audio file (.mp3, .wav):');
-        if (url) {
-            editor.chain().focus().insertContent(`<p><audio controls src="${url}" class="w-full my-4"></audio></p>`).run();
-        }
-    }, [editor])
 
     const Btn = ({ onClick, active, disabled, children }: any) => (
         <button
@@ -139,14 +155,25 @@ const MenuBar = ({ editor }: { editor: any }) => {
             <Btn onClick={setLink} active={editor.isActive('link')}>
                 <LinkIcon size={16} />
             </Btn>
-            <Btn onClick={addImage}>
+            
+            <div className="w-px h-6 bg-gray-300 dark:bg-gray-700 mx-1"></div>
+
+            {/* Hidden file inputs */}
+            <input type="file" ref={imageInputRef} onChange={(e) => handleUpload(e, 'image')} accept="image/*" className="hidden" />
+            <input type="file" ref={audioInputRef} onChange={(e) => handleUpload(e, 'audio')} accept="audio/*" className="hidden" />
+            <input type="file" ref={videoInputRef} onChange={(e) => handleUpload(e, 'video')} accept="video/*" className="hidden" />
+
+            <Btn onClick={() => imageInputRef.current?.click()} disabled={isUploading}>
                 <ImageIcon size={16} />
             </Btn>
-            <Btn onClick={addYoutubeVideo}>
-                <YoutubeIcon size={16} />
+            <Btn onClick={() => videoInputRef.current?.click()} disabled={isUploading}>
+                <Film size={16} />
             </Btn>
-            <Btn onClick={addAudio}>
+            <Btn onClick={() => audioInputRef.current?.click()} disabled={isUploading}>
                 <Music size={16} />
+            </Btn>
+            <Btn onClick={addYoutubeVideo} disabled={isUploading}>
+                <YoutubeIcon size={16} />
             </Btn>
 
             <div className="w-px h-6 bg-gray-300 dark:bg-gray-700 mx-1"></div>

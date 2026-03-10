@@ -8,15 +8,15 @@ type Params = Promise<{ slug: string }>;
 export default async function BlogPostPage(props: { params: Params }) {
   const params = await props.params;
   const post = await prisma.post.findUnique({
-    where: { slug: params.slug, type: 'story' }
+    where: { slug: params.slug }
   });
 
-  if (!post || !post.published) return notFound();
+  if (!post || !post.published || (post.type !== 'story' && post.type !== 'article')) return notFound();
 
   return (
     <div className="container mx-auto px-4 py-20 max-w-3xl">
       <Link href="/stories" className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-black dark:hover:text-white transition-colors mb-12">
-        <ArrowLeft size={16} /> Back to stories
+        <ArrowLeft size={16} /> Back to stories & articles
       </Link>
 
       <article>
@@ -34,7 +34,7 @@ export default async function BlogPostPage(props: { params: Params }) {
           <div className="flex items-center gap-4 text-gray-500 font-medium text-sm">
             <time>{new Date(post.createdAt).toLocaleDateString()}</time>
             <span className="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-700"></span>
-            <span className="uppercase tracking-widest text-xs">Story</span>
+            <span className="uppercase tracking-widest text-xs">{post.type === 'article' ? 'Article' : 'Story'}</span>
           </div>
         </header>
 

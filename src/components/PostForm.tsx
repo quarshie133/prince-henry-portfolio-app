@@ -107,6 +107,7 @@ export function PostForm({ post }: PostFormProps) {
           >
             <option value="poetry">Poetry</option>
             <option value="story">Short Story</option>
+            <option value="article">Article</option>
           </select>
         </div>
       </div>

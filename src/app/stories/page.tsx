@@ -17,7 +17,7 @@ export default function ShortStoriesPage() {
         if (res.ok) {
           const data = await res.json();
           // Filter on client for now to reuse simple API
-          setPosts(data.filter((p: any) => p.type === 'story' && p.published));
+          setPosts(data.filter((p: any) => (p.type === 'story' || p.type === 'article') && p.published));
         }
       } catch (err) {
         console.error(err);
@@ -36,9 +36,9 @@ export default function ShortStoriesPage() {
   return (
     <PageTransition>
       <div className="container mx-auto px-4 py-20 max-w-5xl">
-        <h1 className="text-4xl md:text-5xl font-serif font-medium mb-4">Short Stories</h1>
+        <h1 className="text-4xl md:text-5xl font-serif font-medium mb-4">Stories & Articles</h1>
         <p className="text-xl text-gray-500 mb-12 font-serif max-w-2xl">
-          A collection of narratives and reflections.
+          A collection of narratives, reflections, and thoughts.
         </p>
 
         {/* Search Bar */}
@@ -69,7 +69,7 @@ export default function ShortStoriesPage() {
                 excerpt={post.content}
                 date={new Date(post.createdAt).toLocaleDateString()}
                 href={`/stories/${post.slug}`}
-                genre="Story"
+                genre={post.type === 'article' ? 'Article' : 'Story'}
                 featuredImage={post.featuredImage}
               />
             ))}

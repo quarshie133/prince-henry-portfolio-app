@@ -6,36 +6,40 @@ import { motion } from 'framer-motion';
 export default function Home() {
   return (
     <div className="relative min-h-[100dvh] w-full flex items-center justify-center overflow-hidden bg-black text-white">
-      {/* Background Image with Overlay */}
-      <div
+      {/* Background Image with Overlay & Zoom Animation */}
+      <motion.div
         className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
         style={{
           backgroundImage: 'url("https://images.unsplash.com/photo-1455390582262-044cdead27d8?q=80&w=2873&auto=format&fit=crop")',
         }}
+        initial={{ scale: 1.1 }}
+        animate={{ scale: 1 }}
+        transition={{ duration: 10, ease: "easeOut" }}
       >
-        <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px]"></div>
-      </div>
+        <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px]"></div>
+      </motion.div>
 
       {/* Content */}
       <div className="relative z-10 container mx-auto px-4 flex flex-col items-center text-center">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, ease: "easeOut" }}
+          transition={{ duration: 1.2, ease: "easeOut" }}
+          className="max-w-4xl mx-auto"
         >
-          <h1 className="text-4xl md:text-6xl lg:text-8xl font-serif font-medium tracking-tight mb-6 text-white drop-shadow-md">
-            Nibenang Prince Henry.
+          <h1 className="text-4xl md:text-5xl lg:text-7xl font-serif font-medium tracking-tight mb-6 text-white drop-shadow-lg leading-tight">
+            Words that resonate. <br className="hidden md:block" />Stories that endure.
           </h1>
         </motion.div>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
-          className="max-w-xl mx-auto"
+          transition={{ duration: 1.2, delay: 0.4, ease: "easeOut" }}
+          className="max-w-2xl mx-auto"
         >
-          <p className="text-lg md:text-2xl text-gray-200 font-serif font-light mb-12 tracking-wide">
-            Words that resonate. Stories that endure.
+          <p className="text-lg md:text-2xl text-gray-300 font-serif font-light mb-12 tracking-wide leading-relaxed">
+            A space where poetry, stories, and reflections come to life.
           </p>
         </motion.div>
 

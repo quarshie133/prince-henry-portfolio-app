@@ -4,7 +4,7 @@ import { revalidatePath } from 'next/cache';
 
 export default async function StoriesManagement() {
   const posts = await prisma.post.findMany({
-    where: { type: 'story' },
+    where: { type: { in: ['story', 'article'] } },
     orderBy: { createdAt: 'desc' }
   });
 
