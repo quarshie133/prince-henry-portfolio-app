@@ -47,7 +47,7 @@ export default async function SubscribersPage() {
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
-                                {subscribers.map((sub, index) => (
+                                {subscribers.map((sub: any) => (
                                     <tr key={sub.id} className="hover:bg-gray-50 dark:hover:bg-[#161616] transition-colors">
                                         <td className="px-6 py-4 font-medium">
                                             {sub.email}
