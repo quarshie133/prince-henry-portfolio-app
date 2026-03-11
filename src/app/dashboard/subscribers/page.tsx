@@ -3,6 +3,9 @@ import { Mail, CalendarDays } from 'lucide-react';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { redirect } from 'next/navigation';
+import ExportCsvButton from '@/components/ExportCsvButton';
+
+export const dynamic = 'force-dynamic';
 
 export default async function SubscribersPage() {
     const session = await getServerSession(authOptions);
@@ -69,12 +72,7 @@ export default async function SubscribersPage() {
             {/* Subscriber Count Summary */}
             <div className="flex justify-between items-center text-sm text-gray-500 px-2 mt-4">
                 <span>Total Subscribers: <strong className="text-black dark:text-white font-medium">{subscribers.length}</strong></span>
-                <button 
-                  disabled={subscribers.length === 0}
-                  className="px-4 py-2 border border-gray-200 dark:border-gray-800 rounded-xl hover:bg-gray-50 dark:hover:bg-[#1a1a1a] transition-colors disabled:opacity-50 flex items-center gap-2"
-                >
-                  Export CSV
-                </button>
+                <ExportCsvButton subscribers={subscribers} />
             </div>
         </div>
     );

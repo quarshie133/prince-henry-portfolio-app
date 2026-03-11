@@ -2,6 +2,8 @@ import { prisma } from '@/lib/prisma';
 import { BookOpen, FileText, CheckCircle, Clock } from 'lucide-react';
 import DashboardOverviewClient from './DashboardOverviewClient';
 
+export const dynamic = 'force-dynamic';
+
 export default async function DashboardOverview() {
   let totalPoetry = 0, totalStories = 0, publishedPosts = 0, drafts = 0;
 
