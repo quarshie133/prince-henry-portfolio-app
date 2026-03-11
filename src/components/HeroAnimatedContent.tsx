@@ -10,7 +10,7 @@ export function HeroAnimatedContent({ heroTitle, heroSub }: { heroTitle: string,
       <motion.div
         className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat w-full h-full"
         style={{
-          backgroundImage: 'url("https://images.unsplash.com/photo-1455390582262-044cdead27d8?q=80&w=2873&auto=format&fit=crop")',
+          backgroundImage: 'url("https://images.unsplash.com/photo-1516414447565-b14be0adf13e?q=80&w=2873&auto=format&fit=crop")',
         }}
         initial={{ scale: 1.1 }}
         animate={{ scale: 1 }}
