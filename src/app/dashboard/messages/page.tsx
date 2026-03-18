@@ -5,7 +5,8 @@ export default async function MessagesPage() {
   let messages: any[] = [];
 
   try {
-    messages = await (prisma as any).contactMessage.findMany({
+    // @ts-ignore - contactMessage model added via prisma db push
+    messages = await prisma.contactMessage.findMany({
       orderBy: { createdAt: 'desc' },
     });
   } catch (error) {

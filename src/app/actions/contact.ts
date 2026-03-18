@@ -13,7 +13,8 @@ export async function submitContactMessage(formData: FormData) {
   }
 
   try {
-    await (prisma as any).contactMessage.create({
+    // @ts-ignore - contactMessage model added via prisma db push
+    await prisma.contactMessage.create({
       data: { name, email, message },
     });
     revalidatePath('/dashboard');

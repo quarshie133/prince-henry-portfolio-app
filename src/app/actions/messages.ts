@@ -5,7 +5,8 @@ import { revalidatePath } from 'next/cache';
 
 export async function markMessageRead(id: string) {
   try {
-    await (prisma as any).contactMessage.update({
+    // @ts-ignore - contactMessage model added via prisma db push
+    await prisma.contactMessage.update({
       where: { id },
       data: { read: true },
     });
@@ -17,7 +18,8 @@ export async function markMessageRead(id: string) {
 
 export async function deleteMessage(id: string) {
   try {
-    await (prisma as any).contactMessage.delete({ where: { id } });
+    // @ts-ignore - contactMessage model added via prisma db push
+    await prisma.contactMessage.delete({ where: { id } });
     revalidatePath('/dashboard/messages');
   } catch (error) {
     console.error('Error deleting message:', error);
