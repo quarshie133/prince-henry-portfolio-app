@@ -2,11 +2,11 @@ import { prisma } from '@/lib/prisma';
 import {
   FaInstagram,
   FaXTwitter,
-  FaFacebookF,
-  FaTiktok,
   FaSnapchat,
-  FaWhatsapp
+  FaWhatsapp,
+  FaMedium
 } from 'react-icons/fa6';
+import { SiSubstack } from 'react-icons/si';
 
 export async function Footer() {
   let socials = null;
@@ -33,14 +33,14 @@ export async function Footer() {
               <FaXTwitter size={20} />
             </a>
           )}
-          {socials?.facebook && (
-            <a href={socials.facebook} target="_blank" aria-label="Facebook" className="text-gray-500 hover:text-black dark:text-gray-400 dark:hover:text-white hover:-translate-y-1 transition-all duration-300">
-              <FaFacebookF size={20} />
+          {socials?.medium && (
+            <a href={socials.medium} target="_blank" aria-label="Medium" className="text-gray-500 hover:text-black dark:text-gray-400 dark:hover:text-white hover:-translate-y-1 transition-all duration-300">
+              <FaMedium size={20} />
             </a>
           )}
-          {socials?.tiktok && (
-            <a href={socials.tiktok} target="_blank" aria-label="TikTok" className="text-gray-500 hover:text-black dark:text-gray-400 dark:hover:text-white hover:-translate-y-1 transition-all duration-300">
-              <FaTiktok size={20} />
+          {socials?.substack && (
+            <a href={socials.substack} target="_blank" aria-label="Substack" className="text-gray-500 hover:text-black dark:text-gray-400 dark:hover:text-white hover:-translate-y-1 transition-all duration-300">
+              <SiSubstack size={20} />
             </a>
           )}
           {socials?.snapchat && (

@@ -3,14 +3,16 @@
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 
-export function HeroAnimatedContent({ heroTitle, heroSub }: { heroTitle: string, heroSub: string }) {
+export function HeroAnimatedContent({ heroTitle, heroSub, heroBgImage }: { heroTitle: string, heroSub: string, heroBgImage?: string | null }) {
   return (
     <>
       {/* Background Image with Zoom Animation */}
       <motion.div
         className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat w-full h-full"
         style={{
-          backgroundImage: 'url("https://images.unsplash.com/photo-1516414447565-b14be0adf13e?q=80&w=2873&auto=format&fit=crop")',
+          backgroundImage: heroBgImage
+            ? `url("${heroBgImage}")`
+            : 'url("https://images.unsplash.com/photo-1516414447565-b14be0adf13e?q=80&w=2873&auto=format&fit=crop")',
         }}
         initial={{ scale: 1.1 }}
         animate={{ scale: 1 }}
@@ -40,9 +42,10 @@ export function HeroAnimatedContent({ heroTitle, heroSub }: { heroTitle: string,
           transition={{ duration: 1.2, delay: 0.4, ease: "easeOut" }}
           className="max-w-2xl mx-auto"
         >
-          <p className="text-lg md:text-2xl text-gray-300 font-serif font-light mb-12 tracking-wide leading-relaxed">
-            {heroSub}
-          </p>
+          <div 
+            className="text-lg md:text-2xl text-gray-300 font-serif font-light mb-12 tracking-wide leading-relaxed prose prose-invert prose-lg max-w-none [&>p]:mb-4"
+            dangerouslySetInnerHTML={{ __html: heroSub }}
+          />
         </motion.div>
 
         <motion.div

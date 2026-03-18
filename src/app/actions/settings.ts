@@ -4,8 +4,8 @@ import { prisma } from '@/lib/prisma';
 import { revalidatePath } from 'next/cache';
 
 export async function updateHeroSettings(formData: FormData) {
-    const heroTitle = formData.get('heroTitle') as string;
-    const heroSub = formData.get('heroSub') as string;
+    const heroTitle = (formData.get('heroTitle') as string) || '';
+    const heroSub = (formData.get('heroSub') as string) || '';
 
     await prisma.siteSettings.upsert({
         where: { id: 'singleton' },
@@ -18,12 +18,13 @@ export async function updateHeroSettings(formData: FormData) {
 }
 
 export async function updateAboutSettings(formData: FormData) {
-    const aboutText = formData.get('aboutText') as string;
+    const aboutText = (formData.get('aboutText') as string) || '';
+    const aboutImage = (formData.get('aboutImage') as string) || null;
 
     await prisma.siteSettings.upsert({
         where: { id: 'singleton' },
-        update: { aboutText },
-        create: { id: 'singleton', aboutText },
+        update: { aboutText, aboutImage },
+        create: { id: 'singleton', aboutText, aboutImage },
     });
 
     revalidatePath('/dashboard/settings/about');
@@ -34,8 +35,8 @@ export async function updateSocialSettings(formData: FormData) {
     const data = {
         instagram: formData.get('instagram') as string || null,
         twitter: formData.get('twitter') as string || null,
-        facebook: formData.get('facebook') as string || null,
-        tiktok: formData.get('tiktok') as string || null,
+        medium: formData.get('medium') as string || null,
+        substack: formData.get('substack') as string || null,
         snapchat: formData.get('snapchat') as string || null,
         whatsapp: formData.get('whatsapp') as string || null,
     };
@@ -49,4 +50,17 @@ export async function updateSocialSettings(formData: FormData) {
     revalidatePath('/dashboard/settings/socials');
     revalidatePath('/');
     revalidatePath('/about');
+}
+
+export async function updateAppearanceSettings(formData: FormData) {
+    const heroBgImage = formData.get('heroBgImage') as string || null;
+
+    await prisma.siteSettings.upsert({
+        where: { id: 'singleton' },
+        update: { heroBgImage },
+        create: { id: 'singleton', heroBgImage },
+    });
+
+    revalidatePath('/dashboard/settings/appearance');
+    revalidatePath('/');
 }

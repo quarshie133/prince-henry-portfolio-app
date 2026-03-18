@@ -34,12 +34,12 @@ export default function SocialSettingsForm({ initialData }: { initialData: any }
             <input type="url" name="twitter" defaultValue={initialData.twitter || ''} className="w-full p-3 rounded-xl border border-gray-200 dark:border-gray-800 bg-transparent focus:ring-2 focus:ring-black dark:focus:ring-white outline-none" placeholder="https://x.com/..." />
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Facebook URL</label>
-            <input type="url" name="facebook" defaultValue={initialData.facebook || ''} className="w-full p-3 rounded-xl border border-gray-200 dark:border-gray-800 bg-transparent focus:ring-2 focus:ring-black dark:focus:ring-white outline-none" placeholder="https://facebook.com/..." />
+            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Medium URL</label>
+            <input type="url" name="medium" defaultValue={initialData.medium || ''} className="w-full p-3 rounded-xl border border-gray-200 dark:border-gray-800 bg-transparent focus:ring-2 focus:ring-black dark:focus:ring-white outline-none" placeholder="https://medium.com/@..." />
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">TikTok URL</label>
-            <input type="url" name="tiktok" defaultValue={initialData.tiktok || ''} className="w-full p-3 rounded-xl border border-gray-200 dark:border-gray-800 bg-transparent focus:ring-2 focus:ring-black dark:focus:ring-white outline-none" placeholder="https://tiktok.com/@..." />
+            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Substack URL</label>
+            <input type="url" name="substack" defaultValue={initialData.substack || ''} className="w-full p-3 rounded-xl border border-gray-200 dark:border-gray-800 bg-transparent focus:ring-2 focus:ring-black dark:focus:ring-white outline-none" placeholder="https://yourname.substack.com..." />
           </div>
           <div className="space-y-2">
             <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Snapchat URL</label>

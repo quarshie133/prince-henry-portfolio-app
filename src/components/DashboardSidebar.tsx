@@ -12,7 +12,8 @@ import {
   User,
   PanelLeftClose,
   Menu,
-  Users
+  Users,
+  MessageSquare
 } from "lucide-react";
 import { useState } from "react";
 
@@ -101,6 +102,7 @@ export default function DashboardSidebar() {
             <SidebarLink href="/dashboard/poetry" icon={<BookOpen size={18} />} label="Poetry Posts" />
             <SidebarLink href="/dashboard/stories" icon={<FileText size={18} />} label="Short Stories" />
             <SidebarLink href="/dashboard/subscribers" icon={<Users size={18} />} label="Subscribers" />
+            <SidebarLink href="/dashboard/messages" icon={<MessageSquare size={18} />} label="Messages" />
           </div>
 
           <div className="space-y-1">
@@ -108,8 +110,9 @@ export default function DashboardSidebar() {
               Site Settings
             </div>
             <SidebarLink href="/dashboard/settings/hero" icon={<LayoutDashboard size={18} />} label="Hero Section" />
+            <SidebarLink href="/dashboard/settings/appearance" icon={<LayoutDashboard size={18} />} label="Appearance" />
             <SidebarLink href="/dashboard/settings/about" icon={<User size={18} />} label="About Page" />
-            <SidebarLink href="/dashboard/settings/socials" icon={<Settings size={18} />} label="Social Media Links" />
+            <SidebarLink href="/dashboard/settings/socials" icon={<Settings size={18} />} label="Social Links" />
           </div>
         </div>
 

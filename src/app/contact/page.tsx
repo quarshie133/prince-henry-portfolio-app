@@ -1,7 +1,8 @@
 import { prisma } from '@/lib/prisma';
 import { PageTransition } from '@/components/PageTransition';
-import { Mail, MessageCircle, MapPin } from 'lucide-react';
+import { Mail, MessageCircle } from 'lucide-react';
 import NewsletterForm from '@/components/NewsletterForm';
+import ContactForm from '@/components/ContactForm';
 
 export default async function ContactPage() {
   let socials = null;
@@ -49,53 +50,8 @@ export default async function ContactPage() {
             )}
           </div>
 
-          {/* Web3Forms Contact Form */}
-          <div className="bg-white dark:bg-[#111] border border-gray-100 dark:border-gray-800 rounded-2xl p-8 shadow-sm">
-            <h2 className="text-2xl font-serif font-medium mb-6">Send a Message</h2>
-            <form action="https://api.web3forms.com/submit" method="POST" className="flex flex-col gap-5">
-              {/* Replace with actual Web3Forms Access Key for henrynibenang@yahoo.com */}
-              <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY_HERE" />
-              <input type="hidden" name="subject" value="New Submission from Writer Portfolio" />
-              <input type="hidden" name="redirect" value="https://web3forms.com/success" />
-
-              <div className="space-y-1">
-                <label className="text-sm font-medium">Name</label>
-                <input
-                  type="text"
-                  name="name"
-                  required
-                  className="w-full p-3 rounded-xl border border-gray-200 dark:border-gray-800 bg-transparent focus:ring-2 focus:ring-black dark:focus:ring-white outline-none"
-                  placeholder="Your name"
-                />
-              </div>
-
-              <div className="space-y-1">
-                <label className="text-sm font-medium">Email</label>
-                <input
-                  type="email"
-                  name="email"
-                  required
-                  className="w-full p-3 rounded-xl border border-gray-200 dark:border-gray-800 bg-transparent focus:ring-2 focus:ring-black dark:focus:ring-white outline-none"
-                  placeholder="you@example.com"
-                />
-              </div>
-
-              <div className="space-y-1">
-                <label className="text-sm font-medium">Message</label>
-                <textarea
-                  name="message"
-                  required
-                  rows={5}
-                  className="w-full p-3 rounded-xl border border-gray-200 dark:border-gray-800 bg-transparent focus:ring-2 focus:ring-black dark:focus:ring-white outline-none resize-y"
-                  placeholder="Your message..."
-                />
-              </div>
-
-              <button type="submit" className="w-full mt-2 bg-black dark:bg-white text-white dark:text-black font-medium p-3 rounded-xl hover:opacity-90 transition-opacity">
-                Send Message
-              </button>
-            </form>
-          </div>
+          {/* Contact Form */}
+          <ContactForm />
         </div>
 
         {/* Newsletter Subscription Section */}

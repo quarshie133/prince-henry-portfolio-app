@@ -15,8 +15,8 @@ export default async function SocialSettingsPage() {
   const defaultSettings = settings || {
     instagram: "",
     twitter: "",
-    facebook: "",
-    tiktok: "",
+    medium: "",
+    substack: "",
     snapchat: "",
     whatsapp: "+233 55 659 7805",
   };

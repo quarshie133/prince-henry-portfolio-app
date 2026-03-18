@@ -4,12 +4,15 @@ import { motion } from 'framer-motion';
 import { updateHeroSettings } from '@/app/actions/settings';
 import { useState, useTransition } from 'react';
 import { Save, Check } from 'lucide-react';
+import Editor from '@/components/Editor';
 
 export default function HeroSettingsForm({ initialData }: { initialData: any }) {
   const [isPending, startTransition] = useTransition();
   const [saved, setSaved] = useState(false);
+  const [subContent, setSubContent] = useState(initialData?.heroSub || '');
 
   const handleSubmit = (formData: FormData) => {
+    formData.set('heroSub', subContent);
     startTransition(async () => {
       await updateHeroSettings(formData);
       setSaved(true);
@@ -42,14 +45,10 @@ export default function HeroSettingsForm({ initialData }: { initialData: any }) 
           <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
             Hero Subtitle
           </label>
-          <textarea 
-            required 
-            name="heroSub"
-            defaultValue={initialData.heroSub}
-            rows={4} 
-            className="w-full p-4 rounded-xl border border-gray-200 dark:border-gray-800 bg-transparent focus:ring-2 focus:ring-black dark:focus:ring-white outline-none leading-relaxed resize-y"
-            placeholder="Subheading or longer description..."
-          />
+          <input type="hidden" name="heroSub" value={subContent} />
+          <div className="border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden bg-white dark:bg-black">
+            <Editor content={subContent} onChange={setSubContent} />
+          </div>
         </div>
 
         <div className="pt-4 flex items-center justify-between border-t border-gray-200 dark:border-gray-800">

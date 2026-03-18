@@ -34,8 +34,9 @@ model SiteSettings {
   aboutImage String?
   instagram  String?
   twitter    String?
-  facebook   String?
-  tiktok     String?
+  medium         String?
+  substack       String?
+  heroBgImage    String?
   snapchat   String?
   whatsapp   String?  @default("+233 55 659 7805")
   updatedAt  DateTime @updatedAt
@@ -44,5 +45,14 @@ model SiteSettings {
 model Subscriber {
   id        String   @id @default(cuid())
   email     String   @unique
+  createdAt DateTime @default(now())
+}
+
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  message   String
+  read      Boolean  @default(false)
   createdAt DateTime @default(now())
 }

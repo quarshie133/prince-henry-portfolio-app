@@ -14,10 +14,11 @@ export default async function Home() {
 
   const heroTitle = settings?.heroTitle || "Words that resonate. Stories that endure.";
   const heroSub = settings?.heroSub || "A space where poetry, stories, and reflections come to life.";
+  const heroBgImage = settings?.heroBgImage || null;
 
   return (
     <div className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-black text-white">
-      <HeroAnimatedContent heroTitle={heroTitle} heroSub={heroSub} />
+      <HeroAnimatedContent heroTitle={heroTitle} heroSub={heroSub} heroBgImage={heroBgImage} />
     </div>
   );
 }

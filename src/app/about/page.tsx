@@ -20,8 +20,8 @@ export default async function AboutPage() {
             {/* Placeholder image for profile */}
             <div className="aspect-[4/5] w-full bg-gray-100 dark:bg-gray-800 rounded-2xl overflow-hidden relative border border-gray-200 dark:border-gray-800 group">
               <Image
-                src="/profile_placeholder.png"
-                alt="Profile picture placeholder"
+                src={settings?.aboutImage || "/profile_placeholder.png"}
+                alt="Profile picture"
                 fill
                 className="object-cover transition-transform duration-700 group-hover:scale-105"
                 sizes="(max-width: 768px) 100vw, 33vw"
@@ -30,9 +30,10 @@ export default async function AboutPage() {
             </div>
           </div>
 
-          <div className="w-full md:w-2/3 prose prose-lg dark:prose-invert font-serif leading-loose text-gray-800 dark:text-gray-200 whitespace-pre-wrap">
-            {settings?.aboutText || "Hello.\n\nI'm a writer bridging the gap between digital thoughts and tangible feelings. My work explores the intersections of modern life, technology, and timeless human emotions.\n\nThank you for reading."}
-          </div>
+          <div 
+            className="w-full md:w-2/3 prose prose-lg dark:prose-invert font-serif leading-loose text-gray-800 dark:text-gray-200 whitespace-normal"
+            dangerouslySetInnerHTML={{ __html: settings?.aboutText || "<p>Hello.</p><p>I'm a writer bridging the gap between digital thoughts and tangible feelings. My work explores the intersections of modern life, technology, and timeless human emotions.</p><p>Thank you for reading.</p>" }}
+          />
         </div>
       </div>
     </PageTransition>

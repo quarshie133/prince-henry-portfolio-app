@@ -1,23 +1,20 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { updateAboutSettings } from '@/app/actions/settings';
+import { updateAppearanceSettings } from '@/app/actions/settings';
 import { useState, useTransition } from 'react';
 import { Save, Check, Upload } from 'lucide-react';
-import Editor from '@/components/Editor';
 
-export default function AboutSettingsForm({ initialData }: { initialData: any }) {
+export default function AppearanceSettingsForm({ initialData }: { initialData: any }) {
   const [isPending, startTransition] = useTransition();
   const [saved, setSaved] = useState(false);
-  const [content, setContent] = useState(initialData?.aboutText || '');
-  const [imageUrl, setImageUrl] = useState(initialData?.aboutImage || '');
+  const [imageUrl, setImageUrl] = useState(initialData.dashboardImage || '');
   const [isUploading, setIsUploading] = useState(false);
 
   const handleSubmit = (formData: FormData) => {
-    formData.set('aboutText', content);
-    formData.set('aboutImage', imageUrl);
+    formData.set('heroBgImage', imageUrl);
     startTransition(async () => {
-      await updateAboutSettings(formData);
+      await updateAppearanceSettings(formData);
       setSaved(true);
       setTimeout(() => setSaved(false), 3000);
     });
@@ -56,8 +53,9 @@ export default function AboutSettingsForm({ initialData }: { initialData: any })
       <form action={handleSubmit} className="space-y-8">
         <div className="space-y-4">
           <label className="text-sm font-medium text-gray-700 dark:text-gray-300 block">
-            Profile Image
+            Hero Background Image
           </label>
+          
           <div className="flex gap-4 items-start">
             <div className="flex-1">
               <label className="cursor-pointer inline-flex px-6 py-4 border-2 border-dashed border-gray-200 dark:border-gray-800 rounded-xl hover:bg-gray-50 dark:hover:bg-[#222] transition-colors items-center gap-3 text-sm font-medium w-full justify-center">
@@ -69,21 +67,11 @@ export default function AboutSettingsForm({ initialData }: { initialData: any })
               </label>
             </div>
             {imageUrl && (
-              <div className="w-32 h-40 rounded-xl overflow-hidden border border-gray-200 dark:border-gray-800 relative bg-gray-100 dark:bg-gray-900 shrink-0 shadow-inner">
+              <div className="w-48 h-32 rounded-xl overflow-hidden border border-gray-200 dark:border-gray-800 relative bg-gray-100 dark:bg-gray-900 shrink-0 shadow-inner">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={imageUrl} alt="Profile Preview" className="absolute inset-0 w-full h-full object-cover" />
+                <img src={imageUrl} alt="Background Preview" className="absolute inset-0 w-full h-full object-cover" />
               </div>
             )}
-          </div>
-        </div>
-
-        <div className="space-y-2">
-          <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
-            About Text
-          </label>
-          <input type="hidden" name="aboutText" value={content} />
-          <div className="border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden bg-white dark:bg-black">
-            <Editor content={content} onChange={setContent} />
           </div>
         </div>
 
@@ -95,7 +83,7 @@ export default function AboutSettingsForm({ initialData }: { initialData: any })
                 animate={{ opacity: 1, x: 0 }} 
                 className="flex items-center gap-1.5"
               >
-                <Check size={16} /> Settings saved successfully
+                <Check size={16} /> Background updated
               </motion.span>
             )}
           </div>
