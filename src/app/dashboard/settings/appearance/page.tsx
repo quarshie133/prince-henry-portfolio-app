@@ -1,6 +1,8 @@
 import { prisma } from '@/lib/prisma';
 import AppearanceSettingsForm from './AppearanceSettingsForm';
 
+export const dynamic = 'force-dynamic';
+
 export default async function AppearanceSettingsPage() {
   let settings = null;
   try {

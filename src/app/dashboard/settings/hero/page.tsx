@@ -1,6 +1,8 @@
 import { prisma } from '@/lib/prisma';
 import HeroSettingsForm from '../hero/HeroSettingsForm';
 
+export const dynamic = 'force-dynamic';
+
 export default async function HeroSettingsPage() {
   let settings = null;
 

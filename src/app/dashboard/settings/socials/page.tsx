@@ -1,6 +1,8 @@
 import { prisma } from '@/lib/prisma';
 import SocialSettingsForm from '../socials/SocialSettingsForm';
 
+export const dynamic = 'force-dynamic';
+
 export default async function SocialSettingsPage() {
   let settings = null;
 
