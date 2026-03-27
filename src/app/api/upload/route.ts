@@ -1,9 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
-import { writeFile } from 'fs/promises';
-import { join } from 'path';
-import { mkdir } from 'fs/promises';
+import { v2 as cloudinary } from 'cloudinary';
 
 export async function POST(request: Request) {
     try {
@@ -22,25 +20,22 @@ export async function POST(request: Request) {
         const bytes = await file.arrayBuffer();
         const buffer = Buffer.from(bytes);
 
-        // Ensure uploads directory exists
-        const uploadDir = join(process.cwd(), 'public/uploads');
-        try {
-            await mkdir(uploadDir, { recursive: true });
-        } catch (e) {
-            // Ignore if directory already exists
-        }
+        // Upload to Cloudinary using upload_stream
+        const uploadResult = await new Promise((resolve, reject) => {
+            const uploadStream = cloudinary.uploader.upload_stream(
+                { folder: 'writer-portfolio' },
+                (error, result) => {
+                    if (error) reject(error);
+                    else resolve(result);
+                }
+            );
+            uploadStream.end(buffer);
+        });
 
-        // Generate unique filename
-        const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
-        const filename = `${uniqueSuffix}-${file.name.replace(/[^a-zA-Z0-9.]/g, '')}`;
-        const filepath = join(uploadDir, filename);
-
-        await writeFile(filepath, buffer);
-
-        // Return path relative to public folder
-        return NextResponse.json({ url: `/uploads/${filename}` });
+        // Return the secure Cloudinary URL
+        return NextResponse.json({ url: (uploadResult as any).secure_url });
     } catch (error) {
-        console.error("Upload error:", error);
+        console.error("Cloudinary Upload error:", error);
         return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
     }
 }
