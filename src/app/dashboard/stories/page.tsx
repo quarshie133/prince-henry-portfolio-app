@@ -11,7 +11,8 @@ export default async function StoriesManagement() {
   async function deletePost(formData: FormData) {
     'use server';
     const id = formData.get('id') as string;
-    await prisma.post.delete({ where: { id } });
+    // Use deleteMany so it silently succeeds even if the record is already gone (avoids P2025)
+    await prisma.post.deleteMany({ where: { id } });
     revalidatePath('/dashboard/stories');
     revalidatePath('/stories');
   }
