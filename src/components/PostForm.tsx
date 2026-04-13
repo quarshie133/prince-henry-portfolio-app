@@ -65,8 +65,13 @@ export function PostForm({ post }: PostFormProps) {
         throw new Error('Failed to save post');
       }
 
-      router.push('/dashboard');
-      router.refresh();
+      // Determine destination based on post type
+      const destination = postData.type === 'poetry'
+        ? '/dashboard/poetry'
+        : '/dashboard/stories';
+
+      router.refresh(); // Invalidate server component cache
+      router.push(destination);
     } catch (err: any) {
       setError(err.message);
     } finally {

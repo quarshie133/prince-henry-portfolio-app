@@ -13,7 +13,7 @@ export default function PoetryPage() {
   useEffect(() => {
     async function fetchPosts() {
       try {
-        const res = await fetch('/api/posts');
+        const res = await fetch('/api/posts', { cache: 'no-store' });
         if (res.ok) {
           const data = await res.json();
           setPosts(data.filter((p: any) => p.type === 'poetry' && p.published));

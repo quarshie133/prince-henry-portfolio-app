@@ -4,6 +4,7 @@ import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { revalidatePath } from 'next/cache';
 
 function generateSlug(title: string) {
     return title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') + '-' + Math.random().toString(36).substring(2, 8);
@@ -14,7 +15,9 @@ export async function GET() {
         const posts = await prisma.post.findMany({
             orderBy: { createdAt: 'desc' }
         });
-        return NextResponse.json(posts);
+        return NextResponse.json(posts, {
+            headers: { 'Cache-Control': 'no-store, must-revalidate' },
+        });
     } catch (error) {
         console.error("GET /api/posts error:", error);
         return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
@@ -47,6 +50,13 @@ export async function POST(request: Request) {
                 featuredImage: featuredImage || null,
             },
         });
+
+        // Bust Next.js data cache so public pages show the new post immediately
+        revalidatePath('/poetry');
+        revalidatePath('/stories');
+        revalidatePath('/dashboard');
+        revalidatePath('/dashboard/poetry');
+        revalidatePath('/dashboard/stories');
 
         return NextResponse.json(post);
     } catch (error) {
