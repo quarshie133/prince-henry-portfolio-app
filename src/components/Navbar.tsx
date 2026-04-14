@@ -23,7 +23,7 @@ export function Navbar() {
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="font-serif text-xl font-medium tracking-tight hover:opacity-80 transition-opacity" onClick={() => setMenuOpen(false)}>
-          Nibenang Prince Henry.
+          Nibenang Prince Henry
         </Link>
 
         {/* Desktop Nav */}
